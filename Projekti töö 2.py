@@ -8,8 +8,10 @@ class TripsTrapsTrull:
 
         self.praegune_mängija = "X"
         self.game_board = [["", "", ""], ["", "", ""], ["", "", ""]]
+        self.player_scores = {"X": 0, "O": 0}  
 
         self.create_board()
+        self.create_scoreboard()  
 
     def create_board(self):
         self.button_list = []
@@ -20,6 +22,13 @@ class TripsTrapsTrull:
                 button.grid(row=row, column=col)
                 self.button_list.append(button)
     
+    def create_scoreboard(self):
+        self.scoreboard = Label(self.trips, text=f"X: {self.player_scores['X']}  O: {self.player_scores['O']}")
+        self.scoreboard.grid(row=3, column=0, columnspan=3)
+    
+    def update_scoreboard(self):
+        self.scoreboard.configure(text=f"X: {self.player_scores['X']}  O: {self.player_scores['O']}")
+    
     def button_click(self, row, col):
         if self.game_board[row][col] == "":
             self.game_board[row][col] = self.praegune_mängija
@@ -27,13 +36,14 @@ class TripsTrapsTrull:
             
             if self.check_win():
                 messagebox.showinfo("Võitja!", f"Mängija {self.praegune_mängija} võitis!")
+                self.player_scores[self.praegune_mängija] += 1  # Update player score
+                self.update_scoreboard()  # Update scoreboard
                 self.reset_game()
             elif self.check_tie():
                 messagebox.showinfo("Viik!", "See on viik!")
                 self.reset_game()
             else:
                 self.switch_player()
-                
                 
     def check_win(self):
         for i in range(3):
@@ -48,26 +58,20 @@ class TripsTrapsTrull:
         else:
             return False           
                 
-                
-   
-            
-    
     def switch_player(self):
         if self.praegune_mängija == "X":
             self.praegune_mängija = "O"
         else:
             self.praegune_mängija = "X"
             
-    
-
-           
     def reset_game(self):
         self.current_player = "X"
         self.game_board = [["", "", ""], ["", "", ""], ["", "", ""]]
         for button in self.button_list:
             button.configure(text="")
             
-            
+    
+         
     def check_tie(self):
         for row in self.game_board:
             for cell in row:
