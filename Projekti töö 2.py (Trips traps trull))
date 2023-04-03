@@ -36,8 +36,8 @@ class TripsTrapsTrull:
             
             if self.check_win():
                 messagebox.showinfo("Võitja!", f"Mängija {self.praegune_mängija} võitis!")
-                self.player_scores[self.praegune_mängija] += 1  # Update player score
-                self.update_scoreboard()  # Update scoreboard
+                self.player_scores[self.praegune_mängija] += 1  
+                self.update_scoreboard()  
                 self.reset_game()
             elif self.check_tie():
                 messagebox.showinfo("Viik!", "See on viik!")
